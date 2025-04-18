@@ -1,7 +1,7 @@
 # 🌟 PokéVerse - Modern Pokemon Explorer
 
 <div align="center">
-  <img src="public/pokeverse-banner.png" alt="PokéVerse Banner" width="800px"/>
+  <img src="public/banner.png" alt="PokéVerse Banner" width="800px"/>
 
   [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
   [![Vite](https://img.shields.io/badge/Vite-5.0.0-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
@@ -49,8 +49,8 @@ Check out the live demo: [PokéVerse Live](https://pokeverse-demo.vercel.app)
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="public/screenshots/home.png" alt="Home Page" width="400"/>
-  <img src="public/screenshots/detail.png" alt="Detail Page" width="400"/>
+  <img src="public/home.png" alt="Home Page" width="400"/>
+  <img src="public/detail.png" alt="Detail Page" width="400"/>
 </div>
 
 ## 🚦 Getting Started
