@@ -1,6 +1,6 @@
 function Pagination({ currentPage, totalPages, onPageChange }) {
     const pageNumbers = [];
-    const maxVisiblePages = 5;
+    const maxVisiblePages = 8;
         let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
         if (endPage - startPage + 1 < maxVisiblePages) {
@@ -20,12 +20,12 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
             currentPage === 1
               ? 'bg-gray-600 cursor-not-allowed'
               : 'bg-red-600 hover:bg-red-700'
-          } text-white transition-colors`}
+          } text-white bg-red-950 transition-colors`}
         >
           Previous
         </button>
         
-        <div className="flex gap-2">
+        <div className="flex gap-2 bg-gray-800 rounded-lg p-2">
           {startPage > 1 && (
             <>
               <button

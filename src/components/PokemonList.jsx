@@ -9,7 +9,7 @@ import ErrorMessage from './ErrorMessage';
 
 function PokemonList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const pokemonPerPage = 5;
+  const pokemonPerPage = 8;
   const navigate = useNavigate();
 
   const { data: pokemon = [], isLoading, error } = useQuery({
