@@ -1,87 +1,171 @@
+import { useState, useEffect } from 'react';
+
 function Pagination({ currentPage, totalPages, onPageChange }) {
-    const pageNumbers = [];
-    const maxVisiblePages = 8;
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-        if (endPage - startPage + 1 < maxVisiblePages) {
-      startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
+  const [animatedPage, setAnimatedPage] = useState(currentPage);
+  const pageNumbers = [];
+  const maxVisiblePages = 5;
+
+  useEffect(() => {
+    setAnimatedPage(currentPage);
+  }, [currentPage]);
+
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
   
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
+  const handlePageChange = (page) => {
+    if (page !== currentPage && page >= 1 && page <= totalPages) {
+      setAnimatedPage(page);
+      onPageChange(page);
     }
-  
-    return (
-      <div className="flex justify-center items-center gap-4 mt-8 mb-8">
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-4 mt-8 mb-8">
+      <div className="flex items-center gap-4">
+        {/* Previous button with custom design */}
         <button
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-4 py-2 rounded-lg ${
+          className={`relative group px-4 py-2 rounded-xl overflow-hidden ${
             currentPage === 1
-              ? 'bg-gray-600 cursor-not-allowed'
-              : 'bg-red-600 hover:bg-red-700'
-          } text-white bg-red-950 transition-colors`}
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:scale-105 transform transition-transform'
+          }`}
         >
-          Previous
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-sm rounded-xl" />
+          <div className="relative flex items-center gap-2">
+            <svg
+              className="w-5 h-5 text-white transition-transform group-hover:-translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="text-white font-medium">Previous</span>
+          </div>
         </button>
-        
-        <div className="flex gap-2 bg-gray-800 rounded-lg p-2">
+
+        {/* Page numbers container with glass effect */}
+        <div className="flex gap-2 bg-white/5 backdrop-blur-sm rounded-xl p-2 border border-white/10">
+          {/* First page */}
           {startPage > 1 && (
             <>
-              <button
-                onClick={() => onPageChange(1)}
-                className="w-10 h-10 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors"
-              >
-                1
-              </button>
+              <PageButton
+                number={1}
+                isActive={currentPage === 1}
+                onClick={() => handlePageChange(1)}
+              />
               {startPage > 2 && (
-                <span className="w-10 h-10 flex items-center justify-center text-white">...</span>
+                <div className="flex items-center justify-center w-10">
+                  <span className="text-white/60">•••</span>
+                </div>
               )}
             </>
           )}
-  
+
+          {/* Page numbers */}
           {pageNumbers.map(number => (
-            <button
+            <PageButton
               key={number}
-              onClick={() => onPageChange(number)}
-              className={`w-10 h-10 rounded-lg ${
-                currentPage === number
-                  ? 'bg-red-600'
-                  : 'bg-gray-700 hover:bg-gray-600'
-              } text-white transition-colors`}
-            >
-              {number}
-            </button>
+              number={number}
+              isActive={currentPage === number}
+              onClick={() => handlePageChange(number)}
+            />
           ))}
-  
+
+          {/* Last page */}
           {endPage < totalPages && (
             <>
               {endPage < totalPages - 1 && (
-                <span className="w-10 h-10 flex items-center justify-center text-white">...</span>
+                <div className="flex items-center justify-center w-10">
+                  <span className="text-white/60">•••</span>
+                </div>
               )}
-              <button
-                onClick={() => onPageChange(totalPages)}
-                className="w-10 h-10 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors"
-              >
-                {totalPages}
-              </button>
+              <PageButton
+                number={totalPages}
+                isActive={currentPage === totalPages}
+                onClick={() => handlePageChange(totalPages)}
+              />
             </>
           )}
         </div>
-  
+
+        {/* Next button with custom design */}
         <button
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`px-4 py-2 rounded-lg ${
+          className={`relative group px-4 py-2 rounded-xl overflow-hidden ${
             currentPage === totalPages
-              ? 'bg-gray-600 cursor-not-allowed'
-              : 'bg-red-600 hover:bg-red-700'
-          } text-white transition-colors`}
+              ? 'opacity-50 cursor-not-allowed'
+              : 'hover:scale-105 transform transition-transform'
+          }`}
         >
-          Next
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-600/20 to-purple-600/20 backdrop-blur-sm rounded-xl" />
+          <div className="relative flex items-center gap-2">
+            <span className="text-white font-medium">Next</span>
+            <svg
+              className="w-5 h-5 text-white transition-transform group-hover:translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
         </button>
       </div>
-    );
-  }
-  
-  export default Pagination;
+
+      {/* Page info */}
+      <div className="text-white/60 text-sm">
+        Page {currentPage} of {totalPages}
+      </div>
+    </div>
+  );
+}
+function PageButton({ number, isActive, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`relative w-10 h-10 rounded-lg transition-all duration-200 overflow-hidden ${
+        isActive ? 'scale-110' : 'hover:scale-105'
+      }`}
+    >
+      <div className={`absolute inset-0 ${
+        isActive
+          ? 'bg-gradient-to-br from-red-500 to-pink-600'
+          : 'bg-white/10 hover:bg-white/20'
+      } rounded-lg transition-colors`} />
+      
+      {/* Animated border */}
+      {isActive && (
+        <>
+          <div className="absolute inset-0 rounded-lg overflow-hidden">
+            <div className="absolute inset-0 animate-spin-slow opacity-50"
+                 style={{
+                   background: 'conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent)',
+                 }} />
+          </div>
+          <div className="absolute inset-[1px] rounded-lg bg-gradient-to-br from-red-500 to-pink-600" />
+        </>
+      )}
+
+      {/* Number */}
+      <span className={`relative z-10 flex items-center justify-center w-full h-full text-white ${
+        isActive ? 'font-bold' : 'font-medium'
+      }`}>
+        {number}
+      </span>
+    </button>
+  );
+}
+
+export default Pagination;
