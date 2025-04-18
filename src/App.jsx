@@ -4,11 +4,12 @@ import PokemonList from './components/PokemonList';
 import PokemonDetail from './components/PokemonDetail';
 import Navbar from './components/Navbar';
 
+// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 300000, // 5 minutes
-      cacheTime: 900000, // 15 minutes
+      staleTime: 300000, 
+      cacheTime: 900000, 
       retry: 2,
       refetchOnWindowFocus: false,
     },
