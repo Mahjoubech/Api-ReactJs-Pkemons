@@ -19,10 +19,6 @@
 - 🎯 Type-based theming and visual effects
 - 📱 Mobile-friendly interface
 
-## 🚀 Live Demo
-
-Check out the live demo: [PokéVerse Live](https://pokeverse-demo.vercel.app)
-
 ## 🛠️ Technologies Used
 
 ### Core
